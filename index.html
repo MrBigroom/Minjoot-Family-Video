@@ -17,11 +17,12 @@
     <a-scene embedded arjs='sourceType: webcam;' vr-mode-ui="enabled: false">
 
         <a-marker
-        preset="hiro"
+        preset='hiro'
+        near="0.1"
+        far="20"
         raycaster="objects: clickable"
         emitevents="true"
-        cursor="rayOrigin: mouse;"
-        id="markerA">
+        cursor="rayOrigin: mouse;">
         </a-marker>
         
         <a-entity camera></a-entity>
