@@ -2,39 +2,56 @@
 <html>
 
 <head>
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE-edge">
-    <meta name="viewport" content="width-device-width, initial-scale=1.0">
+    <meta name="viewport" content="width-device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <title>Minjoot Family Video</title>
 
-<!-- include A-Frame -->
-<script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <!-- incldue A-Frane -->
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
 
-<!-- include ar.js for A-Frame -->
-<script src="https://jeromeetienne.github.io/AR.js/aframe/build/aframe-ar.js"></script>
+    <!-- inlcude ar.js for A-Frame -->
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+
+</head>
 
 <body style="margin: 0px; overflow: hidden;">
-    <a-scene embedded arjs='sourceType: webcam;' vr-mode-ui="enabled: false">
+    <a-scene embedded arjs='sourceType: webcam;'>
 
-        <a-marker-camera
-        preset='hiro'
-        near="0.1"
-        far="20"
-        raycaster="objects: clickable"
-        emitevents="true"
-        cursor="rayOrigin: mouse;">
-            <a-video src="#bluder-cake" width="8" height="4.5" position="0 0 0" display = flex rotation="-90 0 0"></a-video>
-        </a-marker-camera>
-
-        <!-- adding in the video -->
         <a-assets>
             <video
             id="bluder-cake"
             src="https://cdn.glitch.global/c3042e10-6363-40c4-a743-7eed388bcdb4/Minjoot%20Family%20Video.mp4?v=1645595149018"
             loop="true"
-            muted="true"
-            autoplay></video>
+            webkit-playsinline
+            playsinline
+            ></video>
         </a-assets>
 
+        <a-marker-camera preset='hiro'>
+            <a-video
+            src="#minjoot-family-video"
+            width="8"
+            height="4.5"
+            position="0 0 0"
+            rotation="-90 0 0"
+            play="true"></a-video>
+        </a-marker-camera>
+
+        <script>
+            window.addEventListener('click', function() {
+                var video = document.querySelector('#minjoot-family-video');
+                if(video.paused) {
+                    video.play();
+                }
+                else {
+                    video.pause();
+                }
+            });
+        </script>
+  
     </a-scene>
 </body>
+</html>
