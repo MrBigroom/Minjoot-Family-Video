@@ -1,57 +1,67 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta http-equiv="X-UA-Compatible" content="IE-edge">
+        <meta name="viewport" content="width-device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <title>Minjoot Family Video</title>
 
-<head>
+        <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
+        <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE-edge">
-    <meta name="viewport" content="width-device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>Minjoot Family Video</title>
+    </head>
 
-    <!-- incldue A-Frane -->
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <body style="margin: 0px; overflow: hidden;">
+        <a-scene embedded arjs='sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;'>
 
-    <!-- inlcude ar.js for A-Frame -->
-    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+            <a-assets>
+                <video
+                crossorigin="anonymous"
+                id="minjoot-family-video"
+                autoplay
+                loop="true"
+                type="video/mp4"
+                preload="auto"
+                src="https://cdn.glitch.global/c3042e10-6363-40c4-a743-7eed388bcdb4/Minjoot%20Family%20Video.mp4?v=1645595149018">
+                </video>
+            </a-assets>
 
-</head>
-
-<body style="margin: 0px; overflow: hidden;">
-    <a-scene embedded arjs='sourceType: webcam;'>
-
-        <a-assets>
-            <video
-            id="minjoot-family-video"
-            src="https://cdn.glitch.global/c3042e10-6363-40c4-a743-7eed388bcdb4/Minjoot%20Family%20Video.mp4?v=1645595149018"
-            loop="true"
-            webkit-playsinline
-            playsinline
-            ></video>
-        </a-assets>
-
-        <a-marker-camera preset='custom' type='pattern' url='https://raw.githubusercontent.com/MrBigroom/Minjoot-Family-Video/main/Pattern/pattern-Minjoot.patt'>
-            <a-video
-            src="#minjoot-family-video"
-            width="8"
-            height="4.5"
-            position="0 0 0"
-            rotation="-90 0 0"
-            play="true"></a-video>
-        </a-marker-camera>
+            <a-marker-camera vidhandler preset="hiro">
+                <a-video src="#minjoot-family-video" width="8" height="4.5" rotation="270 0 0"></a-video>
+            </a-marker-camera>
+        </a-scene>
 
         <script>
-            window.addEventListener('click', function() {
-                var video = document.querySelector('#minjoot-family-video');
-                if(video.paused) {
-                    video.play();
-                }
-                else {
-                    video.pause();
+            AFRAME.registerComponent('vidhandler', {
+                init: function() {
+                    this.toggle = false;
+                    this.vid = document.querySelector("#minjoot-family-video");
+                    this.vid.pause();
+                },
+                tick: function() {
+                    if(this.el.object3D.visible == true) {
+                        if(!this.toggle) {
+                            this.toggle = true;
+                            this.vid.play();
+                        }
+                    } else {
+                        this.toggle = false;
+                        this.vid.pause();
+                    }
                 }
             });
         </script>
-  
-    </a-scene>
-</body>
-</html>
+
+        <script>
+            window.addEventListener('click', function() {
+                var v = document.querySelector("#minjoot-family-video");
+                
+                if(v.paused) {
+                    v.play();
+                } else {
+                    v.pause();
+                }
+            });
+        </script>
+    </body>
